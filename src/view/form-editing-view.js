@@ -397,6 +397,18 @@ export default class FormEditingView extends AbstractStatefulView {
     this.element.querySelector('.event__rollup-btn').disabled = false;
   }
 
+  reset(point) {
+    this.updateElement({
+      point: { ...point },
+      destination: this.#allDestinations.find((dest) => dest.id === point.destination) || null,
+      offers: this.#allOffers.find((offer) => offer.type === point.type)?.offers || []
+    });
+
+
+    this.#datepickerFrom?.setDate(getValidDate(point.date_from));
+    this.#datepickerTo?.setDate(getValidDate(point.date_to));
+  }
+
   shake() {
     this.element.style.animation = 'shake 0.6s';
     setTimeout(() => {

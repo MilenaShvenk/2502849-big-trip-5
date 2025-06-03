@@ -84,6 +84,7 @@ export default class PointPresenter {
 
   resetView() {
     if (this.#mode !== Mode.DEFAULT) {
+      this.#editingForm.reset(this.#point);
       this.#switchToRoutePoint();
     }
   }
@@ -116,7 +117,7 @@ export default class PointPresenter {
     if (this.#mode === Mode.DEFAULT) {
       this.#switchToEditingForm();
     } else {
-      this.#switchToRoutePoint();
+      this.resetView();
       this.#onModeChange(null);
       if (this.#isCreating) {
         this.#unlockNewEventButton();
@@ -137,9 +138,11 @@ export default class PointPresenter {
 
       if (this.#isCreating) {
         this.#unlockNewEventButton();
+        this.destroy();
+      } else {
+        this.resetView();
       }
 
-      this.#switchToRoutePoint();
       this.#onModeChange(null);
     }
   };

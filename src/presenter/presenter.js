@@ -203,7 +203,7 @@ export default class Presenter {
     this.#currentEditingPointId = newPoint.id;
   };
 
-    #onModeChange = (pointId) => {
+  #onModeChange = (pointId) => {
     if (this.#currentEditingPointId === pointId) {
       return;
     }
