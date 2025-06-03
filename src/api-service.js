@@ -16,20 +16,20 @@ export default class ApiService {
       .then(ApiService.parseResponse);
   }
 
-  async updatePoint(point) {
+  async addPoint(point) {
     return this.#load({
-      url: `points/${point.id}`,
-      method: HttpMethod.PUT,
+      url: 'points',
+      method: HttpMethod.POST,
       body: JSON.stringify(this.#adaptToServer(point)),
       headers: new Headers({'Content-Type': 'application/json'}),
     })
       .then(ApiService.parseResponse);
   }
 
-  async addPoint(point) {
+  async updatePoint(point) {
     return this.#load({
-      url: 'points',
-      method: HttpMethod.POST,
+      url: `points/${point.id}`,
+      method: HttpMethod.PUT,
       body: JSON.stringify(this.#adaptToServer(point)),
       headers: new Headers({'Content-Type': 'application/json'}),
     })
@@ -85,3 +85,4 @@ export default class ApiService {
     return adaptedPoint;
   }
 }
+

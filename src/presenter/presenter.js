@@ -1,4 +1,3 @@
-/* eslint-disable indent */
 /* eslint-disable camelcase */
 import {render, remove} from '../framework/render.js';
 import {sortPointsByDay, sortPointsByTime, sortPointsByPrice} from '../utils.js';
@@ -33,32 +32,32 @@ export default class Presenter {
   }
 
   #renderTrip() {
-  this.#clearTrip();
+    this.#clearTrip();
 
-  if (this.#pointsModel.isLoading) {
-    this.#renderMessage('Loading...');
-    document.querySelector('.trip-main__event-add-btn').disabled = true;
-    return;
-  }
+    if (this.#pointsModel.isLoading) {
+      this.#renderMessage('Loading...');
+      document.querySelector('.trip-main__event-add-btn').disabled = true;
+      return;
+    }
 
-  if (this.#pointsModel.isFailed) {
-    this.#renderMessage('Failed to load latest route information');
+    if (this.#pointsModel.isFailed) {
+      this.#renderMessage('Failed to load latest route information');
+      document.querySelector('.trip-main__event-add-btn').disabled = false;
+      return;
+    }
+
+    const points = this.#pointsModel.points;
+    const filterType = this.#filterModel.filter;
+
+    if (points.length === 0) {
+      this.#renderEmptyList(filterType);
+      document.querySelector('.trip-main__event-add-btn').disabled = false;
+      return;
+    }
+
+    this.#renderPointsList();
     document.querySelector('.trip-main__event-add-btn').disabled = false;
-    return;
   }
-
-  const points = this.#pointsModel.points;
-  const filterType = this.#filterModel.filter;
-
-  if (points.length === 0) {
-    this.#renderEmptyList(filterType);
-    document.querySelector('.trip-main__event-add-btn').disabled = false;
-    return;
-  }
-
-  this.#renderPointsList();
-  document.querySelector('.trip-main__event-add-btn').disabled = false;
-}
 
   #clearTrip() {
     this.#clearPoints();

@@ -169,12 +169,7 @@ export default class PointPresenter {
   #onDeleteClick = async (point) => {
     try {
       this.#editingForm.setDeletingState();
-      await this.#onDataChange(
-        UserAction.DELETE_POINT,
-        {id: point.id}
-      );
-      this.destroy();
-      this.#onModeChange(null);
+      await this.#onDataChange(UserAction.DELETE_POINT, {id: point.id});
     } catch {
       this.#editingForm.shake();
     } finally {
@@ -188,10 +183,15 @@ export default class PointPresenter {
     this.#unlockNewEventButton();
   };
 
-  #onFavoriteClick = (updatedPoint) => {
-    this.#onDataChange(
-      UserAction.UPDATE_POINT,
-      updatedPoint
-    );
+  #onFavoriteClick = async (updatedPoint) => {
+    try {
+      await this.#onDataChange(
+        UserAction.UPDATE_POINT,
+        updatedPoint
+      );
+    } catch {
+      this.#routePoint.shake();
+    }
   };
 }
+
